@@ -2,7 +2,7 @@ export class Room {
   id: number;
   name: string;
   location: string;
-  capacities: Array<LayoutCapacity>;
+  capacities = new Array<LayoutCapacity>();
 }
 
 export class LayoutCapacity {
