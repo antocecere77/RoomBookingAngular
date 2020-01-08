@@ -10,11 +10,16 @@ import { Room } from 'src/app/model/room';
 export class RoomsComponent implements OnInit {
 
   rooms: Array<Room>;
+  selectedRoom: Room;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
     this.rooms = this.dataService.rooms;
+  }
+
+  setRoom(id: number) {
+    this.selectedRoom = this.rooms.find(room => room.id === id);
   }
 
 }
