@@ -10,6 +10,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RoomDetailComponent } from './admin/rooms/room-detail/room-detail.component';
 import { UserDetailComponent } from './admin/users/user-detail/user-detail.component';
+import { UserEditComponent } from './admin/users/user-edit/user-edit.component';
 
 const routes: Routes = [
   { path: 'admin/users', component: UsersComponent},
@@ -28,7 +29,8 @@ const routes: Routes = [
     CalendarComponent,
     PageNotFoundComponent,
     RoomDetailComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,
