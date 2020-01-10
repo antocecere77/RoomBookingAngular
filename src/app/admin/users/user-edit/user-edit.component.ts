@@ -11,11 +11,18 @@ export class UserEditComponent implements OnInit {
   @Input()
   user: User;
 
+  formUser: User;
+
   message: string;
 
   constructor() { }
 
   ngOnInit() {
+    this.formUser = Object.assign({}, this.user);
+  }
+
+  onSubmit() {
+    console.log('We need to save the user ', this.formUser);
   }
 
 }

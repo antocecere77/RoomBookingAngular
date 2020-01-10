@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { Routes, Router, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
-import { RoomsComponent } from './admin/rooms/rooms.component';
-import { UsersComponent } from './admin/users/users.component';
-import { AppComponent } from './app.component';
-import { MenuComponent } from './menu/menu.component';
-import { CalendarComponent } from './calendar/calendar.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RoomDetailComponent } from './admin/rooms/room-detail/room-detail.component';
+import { RoomsComponent } from './admin/rooms/rooms.component';
 import { UserDetailComponent } from './admin/users/user-detail/user-detail.component';
 import { UserEditComponent } from './admin/users/user-edit/user-edit.component';
+import { UsersComponent } from './admin/users/users.component';
+import { AppComponent } from './app.component';
+import { CalendarComponent } from './calendar/calendar.component';
+import { MenuComponent } from './menu/menu.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: 'admin/users', component: UsersComponent},
@@ -34,6 +35,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],
