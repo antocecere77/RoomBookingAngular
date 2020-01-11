@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from 'src/app/model/user';
+import { DataService } from 'src/app/data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-edit',
@@ -15,14 +17,19 @@ export class UserEditComponent implements OnInit {
 
   message: string;
 
-  constructor() { }
+  constructor(private dataService: DataService, private router: Router) { }
 
   ngOnInit() {
     this.formUser = Object.assign({}, this.user);
   }
 
   onSubmit() {
-    console.log('We need to save the user ', this.formUser);
+    // console.log('We need to save the user ', this.formUser);
+    this.dataService.updateUser(this.formUser).subscribe(
+      (user) => {
+        this.router.navigate(['admin', 'users'], {queryParams: {action: 'view', id: user.id}});
+      }
+    );
   }
 
 }

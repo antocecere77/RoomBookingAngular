@@ -19,6 +19,12 @@ export class DataService {
     return of(this.users);
   }
 
+  updateUser(user: User): Observable<User> {
+    const originalUser = this.users.find(u => u.id === user.id);
+    originalUser.name = user.name;
+    return of(originalUser);
+  }
+
   constructor() {
     this.rooms = new Array<Room>();
     const room1 = new Room();
