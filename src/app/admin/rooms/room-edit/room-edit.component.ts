@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Room } from 'src/app/model/room';
+import { Room, Layout, LayoutCapacity } from 'src/app/model/room';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -11,6 +11,9 @@ export class RoomEditComponent implements OnInit {
 
   @Input()
   room: Room;
+
+  layouts = Object.keys(Layout);
+  layoutEnum = Layout;
 
   roomForm = new FormGroup(
     {
@@ -26,17 +29,25 @@ export class RoomEditComponent implements OnInit {
       roomName: this.room.name,
       location: this.room.location
     });
+
+    for (const layout of this.layouts) {
+      this.roomForm.addControl(`layout${layout}`, new FormControl(`layout${layout}`));
+    }
   }
 
   onSubmit() {
-    console.log(this.roomForm);
-
     this.room.name = this.roomForm.controls.roomName.value;
     this.room.location = this.roomForm.controls.location.value;
-
+    this.room.capacities = new Array<LayoutCapacity>();
+    for (const layout of this.layouts) {
+      const layoutCapacity = new LayoutCapacity();
+      layoutCapacity.layout = Layout[layout];
+      layoutCapacity.capacity = this.roomForm.controls[`layout${layout}`].value;
+      this.room.capacities.push(layoutCapacity);
+    }
     console.log(this.room);
 
-    //Call a method in the data service to save the room
+
   }
 
 }
