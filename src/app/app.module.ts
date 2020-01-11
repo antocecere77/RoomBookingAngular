@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { MenuComponent } from './menu/menu.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { RoomEditComponent } from './admin/rooms/room-edit/room-edit.component';
 
 const routes: Routes = [
   { path: 'admin/users', component: UsersComponent},
@@ -31,7 +32,8 @@ const routes: Routes = [
     PageNotFoundComponent,
     RoomDetailComponent,
     UserDetailComponent,
-    UserEditComponent
+    UserEditComponent,
+    RoomEditComponent
   ],
   imports: [
     BrowserModule,
