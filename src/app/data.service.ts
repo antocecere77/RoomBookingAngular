@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Room, LayoutCapacity, Layout } from './model/room';
 import { User } from './model/user';
 import { Observable, of } from 'rxjs';
-import { networkInterfaces } from 'os';
 
 @Injectable({
   providedIn: 'root'
