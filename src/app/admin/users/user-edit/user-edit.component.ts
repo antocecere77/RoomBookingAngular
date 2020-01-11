@@ -17,6 +17,8 @@ export class UserEditComponent implements OnInit {
 
   message: string;
 
+  password: string;
+
   constructor(private dataService: DataService, private router: Router) { }
 
   ngOnInit() {
@@ -25,11 +27,20 @@ export class UserEditComponent implements OnInit {
 
   onSubmit() {
     // console.log('We need to save the user ', this.formUser);
-    this.dataService.updateUser(this.formUser).subscribe(
-      (user) => {
-        this.router.navigate(['admin', 'users'], {queryParams: {action: 'view', id: user.id}});
-      }
-    );
+
+    if (this.formUser.id == null) {
+      this.dataService.addUser(this.formUser, this.password).subscribe(
+        (user) => {
+          this.router.navigate(['admin', 'users'], {queryParams: {action: 'view', id: user.id}});
+        }
+      );
+    } else {
+      this.dataService.updateUser(this.formUser).subscribe(
+        (user) => {
+          this.router.navigate(['admin', 'users'], {queryParams: {action: 'view', id: user.id}});
+        }
+      );
+    }
   }
 
 }
