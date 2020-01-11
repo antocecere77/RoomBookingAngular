@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Room } from 'src/app/model/room';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-room-edit',
@@ -11,9 +12,20 @@ export class RoomEditComponent implements OnInit {
   @Input()
   room: Room;
 
+  roomForm = new FormGroup(
+    {
+      roomName: new FormControl('roomName'),
+      location: new FormControl('location')
+    }
+  );
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onSubmit() {
+    console.log(this.roomForm);
   }
 
 }
