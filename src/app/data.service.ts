@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Room, LayoutCapacity, Layout } from './model/room';
 import { User } from './model/user';
 import { Observable, of } from 'rxjs';
+import { networkInterfaces } from 'os';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,28 @@ export class DataService {
     newUser.id = id + 1;
     this.users.push(newUser);
     return of(newUser);
+  }
+
+  updateRoom(room: Room): Observable<Room> {
+    const originalRoom = this.rooms.find(r => r.id === room.id);
+    originalRoom.name = room.name;
+    originalRoom.location = room.location;
+    originalRoom.capacities = room.capacities;
+
+    return of(originalRoom);
+  }
+
+  addRoom(newRoom: Room): Observable<Room> {
+    let id = 0;
+    for (const room of this.rooms) {
+      if (room.id > id) {
+        id = room.id;
+      }
+    }
+
+    newRoom.id = id + 1;
+    this.rooms.push(newRoom);
+    return of(newRoom);
   }
 
   constructor() {

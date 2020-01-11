@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Room, Layout, LayoutCapacity } from 'src/app/model/room';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { DataService } from 'src/app/data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-room-edit',
@@ -17,7 +19,9 @@ export class RoomEditComponent implements OnInit {
 
   roomForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+              private dataService: DataService,
+              private router: Router) { }
 
   ngOnInit() {
     this.roomForm = this.formBuilder.group({
@@ -43,8 +47,15 @@ export class RoomEditComponent implements OnInit {
       this.room.capacities.push(layoutCapacity);
     }
 
-    console.log(this.room);
-    console.log(this.roomForm);
+    if (this.room.id == null) {
+      this.dataService.addRoom(this.room).subscribe(
+        next => this.router.navigate(['admin', 'rooms'], {queryParams: {action: 'view', id: next.id}})
+      );
+    } else {
+      this.dataService.updateRoom(this.room).subscribe(
+        next => this.router.navigate(['admin', 'rooms'], {queryParams: {action: 'view', id: next.id}})
+      );
+    }
   }
 
 }
