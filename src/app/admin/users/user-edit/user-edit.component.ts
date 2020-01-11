@@ -48,7 +48,11 @@ export class UserEditComponent implements OnInit {
   }
 
   checkIfNameIsValid() {
-    this.nameIsValid = this.formUser.name.trim().length > 0;
+    if (this.formUser.name) {
+      this.nameIsValid = this.formUser.name.trim().length > 0;
+    } else {
+      this.nameIsValid = false;
+    }
   }
 
 }
