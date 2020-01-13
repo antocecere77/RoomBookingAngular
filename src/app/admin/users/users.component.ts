@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/data.service';
 import { User } from 'src/app/model/user';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormResetService } from 'src/app/form-reset-service.service';
 
 @Component({
   selector: 'app-users',
@@ -17,7 +18,8 @@ export class UsersComponent implements OnInit {
 
   constructor(private dataService: DataService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private formResetService: FormResetService) { }
 
   ngOnInit() {
     this.dataService.getUsers().subscribe(
@@ -41,6 +43,7 @@ export class UsersComponent implements OnInit {
   addUser() {
     this.selectedUser = new User();
     this.router.navigate(['admin', 'users'], {queryParams: {action: 'add'}});
+    this.formResetService.resetUserFormEvent.emit(this.selectedUser);
   }
 
 }
