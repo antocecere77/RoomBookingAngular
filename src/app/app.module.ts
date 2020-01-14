@@ -13,11 +13,13 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { MenuComponent } from './menu/menu.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RoomEditComponent } from './admin/rooms/room-edit/room-edit.component';
+import { EditBookingComponent } from './calendar/edit-booking/edit-booking.component';
 
 const routes: Routes = [
   { path: 'admin/users', component: UsersComponent},
   { path: 'admin/rooms', component: RoomsComponent},
   { path: '', component: CalendarComponent},
+  { path: 'editBooking', component: EditBookingComponent},
   { path: '404', component: PageNotFoundComponent},
   { path: '**', redirectTo: '404'}
 ];
@@ -33,7 +35,8 @@ const routes: Routes = [
     RoomDetailComponent,
     UserDetailComponent,
     UserEditComponent,
-    RoomEditComponent
+    RoomEditComponent,
+    EditBookingComponent
   ],
   imports: [
     BrowserModule,
