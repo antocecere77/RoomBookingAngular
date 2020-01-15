@@ -4,6 +4,7 @@ import { User } from './model/user';
 import { Observable, of } from 'rxjs';
 import { Booking } from './model/booking';
 import { formatDate } from '@angular/common';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -119,6 +120,9 @@ export class DataService {
   }
 
   constructor() {
+
+    console.log(environment.restUrl);
+
     this.rooms = new Array<Room>();
     const room1 = new Room();
     room1.id = 1;
