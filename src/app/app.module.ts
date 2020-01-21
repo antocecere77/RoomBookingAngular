@@ -1,19 +1,20 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 
 import { RoomDetailComponent } from './admin/rooms/room-detail/room-detail.component';
+import { RoomEditComponent } from './admin/rooms/room-edit/room-edit.component';
 import { RoomsComponent } from './admin/rooms/rooms.component';
 import { UserDetailComponent } from './admin/users/user-detail/user-detail.component';
 import { UserEditComponent } from './admin/users/user-edit/user-edit.component';
 import { UsersComponent } from './admin/users/users.component';
 import { AppComponent } from './app.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { EditBookingComponent } from './calendar/edit-booking/edit-booking.component';
 import { MenuComponent } from './menu/menu.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { RoomEditComponent } from './admin/rooms/room-edit/room-edit.component';
-import { EditBookingComponent } from './calendar/edit-booking/edit-booking.component';
 
 const routes: Routes = [
   { path: 'admin/users', component: UsersComponent},
@@ -44,6 +45,7 @@ const routes: Routes = [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],
