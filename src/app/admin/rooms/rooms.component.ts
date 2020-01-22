@@ -26,6 +26,7 @@ export class RoomsComponent implements OnInit {
         this.rooms = next;
       }
     );
+
     this.route.queryParams.subscribe(
       (params) => {
         this.action = null;
