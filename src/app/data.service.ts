@@ -90,7 +90,4 @@ export class DataService {
   constructor(private http: HttpClient) {
   }
 
-  getUser(id: number): Observable<User> {
-    return this.http.get<User>(environment.restUrl + '/api/users/' + id);
-  }
 }
