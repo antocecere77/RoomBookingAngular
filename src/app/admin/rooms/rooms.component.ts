@@ -15,6 +15,7 @@ export class RoomsComponent implements OnInit {
   selectedRoom: Room;
   action: string;
   loadingData = true;
+  message = 'Please wait... getting the list of rooms';
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
@@ -26,6 +27,10 @@ export class RoomsComponent implements OnInit {
       (next) => {
         this.rooms = next;
         this.loadingData = false;
+      },
+      (error) => {
+        this.message = 'Sorry - something went wrong, please try again. ' + error.message;
+        console.log(error);
       }
     );
 
