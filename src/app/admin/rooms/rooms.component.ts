@@ -25,6 +25,9 @@ export class RoomsComponent implements OnInit {
 
   ngOnInit() {
     this.loadData();
+  }
+
+  processUrlParams() {
     this.route.queryParams.subscribe(
       (params) => {
         this.action = null;
@@ -47,6 +50,7 @@ export class RoomsComponent implements OnInit {
       (next) => {
         this.rooms = next;
         this.loadingData = false;
+        this.processUrlParams();
       },
       (error) => {
         if (error.status === 402) {
