@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Booking } from 'src/app/model/booking';
-import { Room, Layout } from 'src/app/model/room';
-import { DataService } from 'src/app/data.service';
-import { User } from 'src/app/model/user';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Booking} from '../../model/Booking';
+import {Layout, Room} from '../../model/Room';
+import {DataService} from '../../data.service';
+import {User} from '../../model/User';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-edit-booking',
@@ -30,7 +30,7 @@ export class EditBookingComponent implements OnInit {
       next => this.users = next
     );
 
-    const id = this.route.snapshot.queryParams.id;
+    const id = this.route.snapshot.queryParams['id'];
     if (id) {
       this.dataService.getBooking(+id).subscribe(
         next => this.booking = next

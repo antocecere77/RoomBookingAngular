@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { Room, Layout, LayoutCapacity } from 'src/app/model/room';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DataService } from 'src/app/data.service';
-import { Router } from '@angular/router';
-import { FormResetService } from 'src/app/form-reset-service.service';
-import { Subscription } from 'rxjs';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Layout, LayoutCapacity, Room} from '../../../model/Room';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {DataService} from '../../../data.service';
+import {Router} from '@angular/router';
+import {FormResetService} from '../../../form-reset.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-room-edit',
@@ -24,7 +24,7 @@ export class RoomEditComponent implements OnInit, OnDestroy {
   layouts = Object.keys(Layout);
   layoutEnum = Layout;
 
-  roomForm: FormGroup;
+  roomForm : FormGroup;
 
   resetEventSubscription: Subscription;
 
@@ -43,27 +43,28 @@ export class RoomEditComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.resetEventSubscription.unsubscribe();
   }
 
   initializeForm() {
-    this.roomForm = this.formBuilder.group({
-      roomName: [this.room.name, Validators.required],
-      location: [this.room.location, [Validators.required, Validators.minLength(2)]]}
+    this.roomForm = this.formBuilder.group(
+      {
+        roomName : [this.room.name, Validators.required ],
+        location : [this.room.location , [Validators.required, Validators.minLength(2)] ] }
     );
 
     for (const layout of this.layouts) {
-      const layoutCapacity = this.room.capacities.find(lc => lc.layout === Layout[layout]);
+      const layoutCapacity = this.room.capacities.find ( lc => lc.layout === Layout[layout]);
       const initialCapacity = layoutCapacity == null ? 0 : layoutCapacity.capacity;
       this.roomForm.addControl(`layout${layout}`, this.formBuilder.control(initialCapacity));
     }
   }
 
   onSubmit() {
-    this.message = 'Saving...';
-    this.room.name = this.roomForm.controls.roomName.value;
-    this.room.location = this.roomForm.controls.location.value;
+    this.message = 'Saving...'
+    this.room.name = this.roomForm.controls['roomName'].value;
+    this.room.location = this.roomForm.value['location'];
     this.room.capacities = new Array<LayoutCapacity>();
     for (const layout of this.layouts) {
       const layoutCapacity = new LayoutCapacity();
@@ -76,7 +77,7 @@ export class RoomEditComponent implements OnInit, OnDestroy {
       this.dataService.addRoom(this.room).subscribe(
         next => {
           this.dataChangedEvent.emit();
-          this.router.navigate(['admin', 'rooms'], {queryParams: {action: 'view', id: next.id}});
+          this.router.navigate(['admin','rooms'], {queryParams : { action : 'view', id : next.id}});
         },
         error => this.message = 'Something went wrong, you may wish to try again.'
       );
@@ -89,6 +90,7 @@ export class RoomEditComponent implements OnInit, OnDestroy {
         error => this.message = 'Something went wrong, you may wish to try again.'
       );
     }
+
   }
 
 }

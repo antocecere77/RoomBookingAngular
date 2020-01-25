@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from 'src/app/data.service';
-import { User } from 'src/app/model/user';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormResetService } from 'src/app/form-reset-service.service';
+import {User} from '../../model/User';
+import {DataService} from '../../data.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormResetService} from '../../form-reset.service';
 
 @Component({
   selector: 'app-users',
@@ -29,30 +29,32 @@ export class UsersComponent implements OnInit {
 
   loadData() {
     this.dataService.getUsers().subscribe(
-      (next) => {
+      next => {
         this.users = next;
         this.loadingData = false;
-        this.route.queryParams.subscribe((params) => {
-          const id = params.id;
-          this.action = params.action;
-          if (id) {
-            this.selectedUser = this.users.find(user => user.id === +id);
+        this.route.queryParams.subscribe(
+          (params) => {
+            const id = params['id'];
+            this.action = params['action'];
+            if (id) {
+              this.selectedUser = this.users.find(user => user.id === +id);
+            }
           }
-        });
-      },
-      error => {
+        );
+      }, error => {
         this.message = 'An error occurred - please contact support';
       }
     );
+
   }
 
-  selectUser(id: number) {
-    this.router.navigate(['admin', 'users'], {queryParams: {id, action: 'view'}});
+  setUser(id: number) {
+    this.router.navigate(['admin','users'], {queryParams : {id, action : 'view'}});
   }
 
   addUser() {
     this.selectedUser = new User();
-    this.router.navigate(['admin', 'users'], {queryParams: {action: 'add'}});
+    this.router.navigate(['admin','users'], {queryParams : {action : 'add'}});
     this.formResetService.resetUserFormEvent.emit(this.selectedUser);
   }
 

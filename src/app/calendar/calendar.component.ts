@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { formatDate } from '@angular/common';
-import { Booking } from '../model/booking';
-import { DataService } from '../data.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import {formatDate} from '@angular/common';
+import {Booking} from '../model/Booking';
+import {DataService} from '../data.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {User} from '../model/User';
 
 @Component({
   selector: 'app-calendar',
@@ -12,7 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class CalendarComponent implements OnInit {
 
   bookings: Array<Booking>;
-  selectedDate: string;
+  selectedDate : string;
 
   constructor(private dataService: DataService,
               private router: Router,
@@ -21,7 +22,7 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(
       params => {
-        this.selectedDate = params.date;
+        this.selectedDate = params['date'];
         if (!this.selectedDate) {
           this.selectedDate = formatDate(new Date(), 'yyyy-MM-dd', 'en-GB');
         }
@@ -30,6 +31,9 @@ export class CalendarComponent implements OnInit {
         );
       }
     );
+
+
+
   }
 
   editBooking(id: number) {
@@ -40,12 +44,12 @@ export class CalendarComponent implements OnInit {
     this.router.navigate(['addBooking']);
   }
 
-  deleteBooking(id: number) {
+  deleteBooking(id :number) {
     this.dataService.deleteBooking(id).subscribe();
   }
 
   dateChanged() {
-    this.router.navigate([''], {queryParams: {date: this.selectedDate}});
+    this.router.navigate([''], {queryParams : {date : this.selectedDate}});
   }
 
 }

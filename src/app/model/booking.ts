@@ -1,5 +1,5 @@
-import { Room, Layout } from './room';
-import { User } from './user';
+import {Layout, Room} from './Room';
+import {User} from './User';
 
 export class Booking {
   id: number;

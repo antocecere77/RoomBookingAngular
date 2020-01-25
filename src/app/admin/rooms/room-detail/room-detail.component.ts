@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Room } from 'src/app/model/room';
-import { Router } from '@angular/router';
-import { DataService } from 'src/app/data.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {Room} from '../../../model/Room';
+import {Router} from '@angular/router';
+import {DataService} from '../../../data.service';
 
 @Component({
   selector: 'app-room-detail',
@@ -17,16 +17,15 @@ export class RoomDetailComponent implements OnInit {
               private dataService: DataService) { }
 
   ngOnInit() {
-    console.log(this.room);
   }
 
   editRoom() {
-    this.router.navigate(['admin', 'rooms'], {queryParams: {action: 'edit', id: this.room.id}});
+    this.router.navigate(['admin','rooms'], {queryParams : { action: 'edit', id: this.room.id}});
   }
 
   deleteRoom() {
     this.dataService.deleteRoom(this.room.id).subscribe(
-      next => this.router.navigate(['admin', 'rooms'])
+      next => this.router.navigate(['admin','rooms'])
     );
   }
 

@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { User } from 'src/app/model/user';
-import { Data, Router } from '@angular/router';
-import { DataService } from 'src/app/data.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {User} from '../../../model/User';
+import {DataService} from '../../../data.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user-detail',
@@ -17,16 +17,17 @@ export class UserDetailComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+
   }
 
   editUser() {
-    this.router.navigate(['admin', 'users'], {queryParams: {action: 'edit', id: this.user.id}});
+    this.router.navigate(['admin','users'], {queryParams: {action: 'edit', id : this.user.id}});
   }
 
   deleteUser() {
     this.dataService.deleteUser(this.user.id).subscribe(
       next => {
-        this.router.navigate(['admin', 'users']);
+        this.router.navigate(['admin','users']);
       }
     );
   }

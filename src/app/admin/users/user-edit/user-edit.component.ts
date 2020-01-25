@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { User } from 'src/app/model/user';
-import { DataService } from 'src/app/data.service';
-import { Router } from '@angular/router';
-import { FormResetService } from 'src/app/form-reset-service.service';
-import { Subscription } from 'rxjs';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {User} from '../../../model/User';
+import {DataService} from '../../../data.service';
+import {Router} from '@angular/router';
+import {FormResetService} from '../../../form-reset.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-user-edit',
@@ -36,13 +36,13 @@ export class UserEditComponent implements OnInit, OnDestroy {
               private formResetService: FormResetService) { }
 
   ngOnInit() {
-   this.initializeForm();
-   this.userResetSubscription = this.formResetService.resetUserFormEvent.subscribe(
-     user => {
-      this.user = user;
-      this.initializeForm();
-     }
-   );
+    this.initializeForm();
+    this.userResetSubscription = this.formResetService.resetUserFormEvent.subscribe(
+      user => {
+        this.user = user;
+        this.initializeForm();
+      }
+    );
   }
 
   ngOnDestroy(): void {
@@ -51,9 +51,8 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   initializeForm() {
     this.formUser = Object.assign({}, this.user);
-    // console.log(this.formUser.id);
     this.checkIfNameIsValid();
-    this.checkIfPasswordAreValid();
+    this.checkIfPasswordsAreValid();
   }
 
   onSubmit() {
@@ -85,7 +84,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkIfPasswordAreValid() {
+  checkIfPasswordsAreValid() {
     if (this.formUser.id != null) {
       this.passwordsAreValid = true;
       this.passwordsMatch = true;

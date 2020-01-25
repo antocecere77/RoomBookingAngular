@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from 'src/app/data.service';
-import { Room } from 'src/app/model/room';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormResetService } from 'src/app/form-reset-service.service';
+import {Component, OnInit} from '@angular/core';
+import {DataService} from '../../data.service';
+import {Room} from '../../model/Room';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormResetService} from '../../form-reset.service';
 
 @Component({
   selector: 'app-rooms',
@@ -16,27 +16,48 @@ export class RoomsComponent implements OnInit {
   action: string;
   loadingData = true;
   message = 'Please wait... getting the list of rooms';
-  reloadAttemps = 0;
+  reloadAttempts = 0;
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
               private router: Router,
-              private formResetService: FormResetService) { }
+              private formResetService : FormResetService) { }
 
-  ngOnInit() {
-    this.loadData();
-  }
+
+    loadData() {
+      this.dataService.getRooms().subscribe(
+        (next) => {
+          this.rooms = next;
+          this.loadingData = false;
+          this.processUrlParams();
+        },
+        (error) => {
+          if (error.status === 402) {
+            this.message  = 'Sorry - you need to pay to use this application. ';
+          } else {
+            this.reloadAttempts++;
+            if (this.reloadAttempts <= 10) {
+              this.message = 'Sorry - something went wrong, trying again.... please wait ';
+              this.loadData();
+            } else {
+              this.message = 'Sorry - something went wrong, please contact support.';
+            }
+
+          }
+        }
+      );
+    }
 
   processUrlParams() {
     this.route.queryParams.subscribe(
       (params) => {
         this.action = null;
-        const id = params.id;
+        const id = params['id'];
         if (id) {
-          this.selectedRoom = this.rooms.find(room => room.id === +id);
-          this.action = params.action;
+          this.selectedRoom = this.rooms.find( room => room.id === +id);
+          this.action = params['action'];
         }
-        if (params.action === 'add') {
+        if (params['action'] === 'add') {
           this.selectedRoom = new Room();
           this.action = 'edit';
           this.formResetService.resetRoomFormEvent.emit(this.selectedRoom);
@@ -45,36 +66,16 @@ export class RoomsComponent implements OnInit {
     );
   }
 
-  loadData() {
-    this.dataService.getRooms().subscribe(
-      (next) => {
-        this.rooms = next;
-        this.loadingData = false;
-        this.processUrlParams();
-      },
-      (error) => {
-        if (error.status === 402) {
-          this.message = 'Sorry - you need to pay to use this application';
-        } else {
-          this.reloadAttemps++;
-          if (this.reloadAttemps <= 10) {
-            this.message = 'Sorry - something went wrong, try again... please wait';
-            this.loadData();
-            console.log(error);
-          } else {
-            this.message = 'Sorry - something went wrong, please contact support';
-          }
-        }
-      }
-    );
+  ngOnInit() {
+    this.loadData();
   }
 
   setRoom(id: number) {
-    this.router.navigate(['admin', 'rooms'], {queryParams: {id, action: 'view'}});
+    this.router.navigate(['admin','rooms'], {queryParams : {id, action : 'view'} });
   }
 
   addRoom() {
-    this.router.navigate(['admin', 'rooms'], {queryParams: {action: 'add'}});
+    this.router.navigate(['admin','rooms'], {queryParams : {action : 'add'} });
   }
 
 }
