@@ -14,7 +14,7 @@ import {core} from '@angular/compiler';
 })
 export class DataService {
 
-  getRooms() : Observable<Array<Room>> {
+  getRooms(): Observable<Array<Room>> {
     return this.http.get<Array<Room>>(environment.restUrl + '/api/rooms')
       .pipe(
         map( data => {
@@ -28,7 +28,7 @@ export class DataService {
   }
 
   getUsers(): Observable<Array<User>> {
-    return this.http.get<Array<User>>(environment.restUrl+ '/api/users')
+    return this.http.get<Array<User>>(environment.restUrl + '/api/users')
       .pipe(
         map( data => {
           const users = new Array<User>();
@@ -40,21 +40,21 @@ export class DataService {
       );
   }
 
-  updateUser(user: User) : Observable<User> {
+  updateUser(user: User): Observable<User> {
     return this.http.put<User>(environment.restUrl + '/api/users', user);
   }
 
-  addUser(newUser: User, password: string) : Observable<User> {
-    const fullUser = {id: newUser.id, name: newUser.name, password: password};
+  addUser(newUser: User, password: string): Observable<User> {
+    const fullUser = {id: newUser.id, name: newUser.name, password};
     return this.http.post<User>(environment.restUrl + '/api/users', fullUser);
   }
 
-  private getCorrectedRoom(room : Room) {
+  private getCorrectedRoom(room: Room) {
     const correctedRoom = {id: room.id, name: room.name, location: room.location, capacities : [] };
     for (const lc of room.capacities) {
 
       let correctLayout;
-      for (let member in Layout) {
+      for (const member in Layout) {
         if (Layout[member] === lc.layout) {
           correctLayout = member;
         }
@@ -66,43 +66,43 @@ export class DataService {
     return correctedRoom;
   }
 
-  updateRoom(room: Room) : Observable<Room> {
+  updateRoom(room: Room): Observable<Room> {
     return this.http.put<Room>(environment.restUrl + '/api/rooms', this.getCorrectedRoom(room));
   }
 
-  addRoom(room: Room) : Observable<Room> {
+  addRoom(room: Room): Observable<Room> {
     return this.http.post<Room>(environment.restUrl + '/api/rooms', this.getCorrectedRoom(room));
   }
 
-  deleteRoom(id: number) : Observable<any> {
+  deleteRoom(id: number): Observable<any> {
+    return this.http.delete(environment.restUrl + '/api/rooms/' + id);
+  }
+
+  deleteUser(id: number): Observable<any> {
     return of(null);
   }
 
-  deleteUser(id: number) : Observable<any> {
+  resetUserPassword(id: number): Observable<any>  {
     return of(null);
   }
 
-  resetUserPassword(id: number) : Observable<any>  {
+  getBookings(date: string): Observable<Array<Booking>> {
     return of(null);
   }
 
-  getBookings(date: string) : Observable<Array<Booking>> {
+  getBooking(id: number): Observable<Booking> {
     return of(null);
   }
 
-  getBooking(id: number) : Observable<Booking> {
+  saveBooking(booking: Booking): Observable<Booking> {
     return of(null);
   }
 
-  saveBooking(booking: Booking) : Observable<Booking> {
+  addBooking(newBooking: Booking): Observable<Booking> {
     return of(null);
   }
 
-  addBooking(newBooking: Booking) : Observable<Booking> {
-    return of(null);
-  }
-
-  deleteBooking(id : number) : Observable<any> {
+  deleteBooking(id: number): Observable<any> {
     return of(null);
   }
 

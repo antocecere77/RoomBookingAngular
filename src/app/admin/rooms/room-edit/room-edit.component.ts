@@ -24,7 +24,7 @@ export class RoomEditComponent implements OnInit, OnDestroy {
   layouts = Object.keys(Layout);
   layoutEnum = Layout;
 
-  roomForm : FormGroup;
+  roomForm: FormGroup;
 
   resetEventSubscription: Subscription;
 
@@ -62,9 +62,9 @@ export class RoomEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.message = 'Saving...'
-    this.room.name = this.roomForm.controls['roomName'].value;
-    this.room.location = this.roomForm.value['location'];
+    this.message = 'Saving...';
+    this.room.name = this.roomForm.controls.roomName.value;
+    this.room.location = this.roomForm.value.location;
     this.room.capacities = new Array<LayoutCapacity>();
     for (const layout of this.layouts) {
       const layoutCapacity = new LayoutCapacity();
@@ -77,7 +77,7 @@ export class RoomEditComponent implements OnInit, OnDestroy {
       this.dataService.addRoom(this.room).subscribe(
         next => {
           this.dataChangedEvent.emit();
-          this.router.navigate(['admin','rooms'], {queryParams : { action : 'view', id : next.id}});
+          this.router.navigate(['admin', 'rooms'], {queryParams : { action : 'view', id : next.id}});
         },
         error => this.message = 'Something went wrong, you may wish to try again.'
       );

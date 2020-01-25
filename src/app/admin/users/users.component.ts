@@ -34,8 +34,8 @@ export class UsersComponent implements OnInit {
         this.loadingData = false;
         this.route.queryParams.subscribe(
           (params) => {
-            const id = params['id'];
-            this.action = params['action'];
+            const id = params.id;
+            this.action = params.action;
             if (id) {
               this.selectedUser = this.users.find(user => user.id === +id);
             }
@@ -49,12 +49,12 @@ export class UsersComponent implements OnInit {
   }
 
   setUser(id: number) {
-    this.router.navigate(['admin','users'], {queryParams : {id, action : 'view'}});
+    this.router.navigate(['admin', 'users'], {queryParams : {id, action : 'view'}});
   }
 
   addUser() {
     this.selectedUser = new User();
-    this.router.navigate(['admin','users'], {queryParams : {action : 'add'}});
+    this.router.navigate(['admin', 'users'], {queryParams : {action : 'add'}});
     this.formResetService.resetUserFormEvent.emit(this.selectedUser);
   }
 
