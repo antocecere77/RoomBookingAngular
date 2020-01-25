@@ -1,13 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Layout, LayoutCapacity, Room} from './model/Room';
-import {User} from './model/User';
-import {Observable, of} from 'rxjs';
-import {Booking} from './model/Booking';
-import {formatDate} from '@angular/common';
-import {environment} from '../environments/environment';
-import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
-import {core} from '@angular/compiler';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { environment } from '../environments/environment';
+import { Booking } from './model/Booking';
+import { Layout, Room } from './model/Room';
+import { User } from './model/User';
 
 @Injectable({
   providedIn: 'root'
