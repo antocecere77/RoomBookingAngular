@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { User } from 'src/app/model/user';
 import { DataService } from 'src/app/data.service';
 import { Router } from '@angular/router';
@@ -14,6 +14,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   @Input()
   user: User;
+
+  @Output()
+  dataChangedEvent = new EventEmitter();
 
   formUser: User;
 
@@ -48,25 +51,27 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   initializeForm() {
     this.formUser = Object.assign({}, this.user);
-    console.log(this.formUser.id);
+    // console.log(this.formUser.id);
     this.checkIfNameIsValid();
     this.checkIfPasswordAreValid();
   }
 
   onSubmit() {
-    // console.log('We need to save the user ', this.formUser);
-
+    this.message = 'saving...';
     if (this.formUser.id == null) {
       this.dataService.addUser(this.formUser, this.password).subscribe(
         (user) => {
+          this.dataChangedEvent.emit();
           this.router.navigate(['admin', 'users'], {queryParams: {action: 'view', id: user.id}});
         }
       );
     } else {
       this.dataService.updateUser(this.formUser).subscribe(
         (user) => {
+          this.dataChangedEvent.emit();
           this.router.navigate(['admin', 'users'], {queryParams: {action: 'view', id: user.id}});
-        }
+        },
+        error => this.message = 'Something went wrong and the data wasn\'t saved. You may want to try again.'
       );
     }
   }
