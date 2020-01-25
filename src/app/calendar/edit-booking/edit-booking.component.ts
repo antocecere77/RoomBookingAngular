@@ -4,7 +4,6 @@ import {Layout, Room} from '../../model/Room';
 import {DataService} from '../../data.service';
 import {User} from '../../model/User';
 import {ActivatedRoute, Router} from '@angular/router';
-import { EditBookingDataService } from 'src/app/edit-booking-data.service';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -25,12 +24,11 @@ export class EditBookingComponent implements OnInit {
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
-              private router: Router,
-              private editBookingDataService: EditBookingDataService) { }
+              private router: Router) { }
 
   ngOnInit() {
-    this.rooms = this.editBookingDataService.rooms;
-    this.users = this.editBookingDataService.users;
+    this.rooms = this.route.snapshot.data.rooms;
+    this.users = this.route.snapshot.data.users;
     const id = this.route.snapshot.queryParams.id;
     if (id) {
       this.dataService.getBooking(+id)
