@@ -86,7 +86,16 @@ export class DataService {
   }
 
   getBookings(date: string): Observable<Array<Booking>> {
-    return of(null);
+    return this.http.get<Array<Booking>>(environment.restUrl + '/api/bookings/' + date)
+      .pipe(
+        map(data => {
+          const bookings = new Array<Booking>();
+          for (const booking of data) {
+            bookings.push(Booking.fromHttp(booking));
+          }
+          return bookings;
+        })
+      );
   }
 
   getBooking(id: number): Observable<Booking> {
@@ -102,11 +111,11 @@ export class DataService {
   }
 
   deleteBooking(id: number): Observable<any> {
-    return of(null);
+    return this.http.delete(environment.restUrl + '/api/bookings/' + id);
   }
 
   constructor(private http: HttpClient) {
-    console.log(environment.restUrl);
+    // console.log(environment.restUrl);
   }
 
 }
