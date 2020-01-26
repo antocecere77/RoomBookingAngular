@@ -17,6 +17,7 @@ import { MenuComponent } from './menu/menu.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PrefetchRoomsService } from './prefetch-rooms.service';
 import { PrefetchUsersService } from './prefetch-users.service';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {path : 'admin/users', component : UsersComponent},
@@ -40,7 +41,8 @@ const routes: Routes = [
     UserDetailComponent,
     UserEditComponent,
     RoomEditComponent,
-    EditBookingComponent
+    EditBookingComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
