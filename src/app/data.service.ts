@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -115,6 +115,13 @@ export class DataService {
 
   deleteBooking(id: number): Observable<any> {
     return this.http.delete(environment.restUrl + '/api/bookings/' + id);
+  }
+
+  validateUser(name: string, password: string): Observable<string> {
+    const authData = btoa(`${name}:${password}`);
+    const headers = new HttpHeaders().append('Authorization', 'Basic ' + authData);
+
+    return this.http.get<string>(environment.restUrl + '/api/basicAuth/validate', {headers: headers});
   }
 
   constructor(private http: HttpClient) {
