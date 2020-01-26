@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AuthService} from '../auth.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -20,24 +20,26 @@ export class LoginComponent implements OnInit, OnDestroy {
               private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.authService.authenticationResultEvent.subscribe(
+    this.subscription = this.authService.authenticationResultEvent.subscribe(
       result => {
         if (result) {
           const url = this.activatedRoute.snapshot.queryParams.requested;
           this.route.navigateByUrl(url);
         } else {
-          this.message = 'Your username or password was not recognized - try again';
+          this.message = 'Your username or password was not recognised - try again.';
         }
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   onSubmit() {
     this.authService.authenticate(this.name, this.password);
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+
 
 }
