@@ -66,7 +66,7 @@ export class DataService {
     return correctedRoom;
   }
 
-  updateRoom(room: Room, token: string) : Observable<Room> {
+  updateRoom(room: Room, token: string): Observable<Room> {
     const headers = new HttpHeaders().append('Authorization', 'Bearer ' + token);
     console.log(headers);
     return this.http.put<Room>(environment.restUrl + '/api/rooms', this.getCorrectedRoom(room), {headers});

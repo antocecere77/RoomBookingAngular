@@ -26,4 +26,11 @@ export class AuthService {
       }
     );
   }
+
+  getRole(): string {
+    if (this.jwtToken == null) { return null; }
+    const encodedPayload = this.jwtToken.split('.')[1];
+    const payload = atob(encodedPayload);
+    return JSON.parse(payload).role;
+  }
 }

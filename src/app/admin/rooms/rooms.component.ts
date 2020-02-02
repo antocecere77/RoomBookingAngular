@@ -18,6 +18,7 @@ export class RoomsComponent implements OnInit {
   loadingData = true;
   message = 'Please wait... getting the list of rooms';
   reloadAttempts = 0;
+  isAdminUser = false;
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
@@ -70,6 +71,9 @@ export class RoomsComponent implements OnInit {
 
   ngOnInit() {
     this.loadData();
+    if (this.authService.getRole() === 'ADMIN') {
+      this.isAdminUser = true;
+    }
   }
 
   setRoom(id: number) {
