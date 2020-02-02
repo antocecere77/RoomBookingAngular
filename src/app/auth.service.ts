@@ -35,6 +35,17 @@ export class AuthService {
     );
   }
 
+  checkIfAlreadyAuthenticated() {
+    this.dataService.getRole().subscribe(
+      next => {
+        if (next.role !== '') {
+          this.isAuthenticated = true;
+          this.authenticationResultEvent.emit(true);
+        }
+      }
+    );
+  }
+
   // constgetRole(): string {
     // if (this.jwtToken == null) { return null; }
     // const encodedPayload = this.jwtToken.split('.')[1];

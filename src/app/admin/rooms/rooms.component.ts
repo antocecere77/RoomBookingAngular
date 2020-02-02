@@ -55,12 +55,12 @@ export class RoomsComponent implements OnInit {
     this.route.queryParams.subscribe(
       (params) => {
         this.action = null;
-        const id = params['id'];
+        const id = params.id;
         if (id) {
           this.selectedRoom = this.rooms.find( room => room.id === +id);
-          this.action = params['action'];
+          this.action = params.action;
         }
-        if (params['action'] === 'add') {
+        if (params.action === 'add') {
           this.selectedRoom = new Room();
           this.action = 'edit';
           this.formResetService.resetRoomFormEvent.emit(this.selectedRoom);
