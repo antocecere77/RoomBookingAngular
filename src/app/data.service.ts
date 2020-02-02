@@ -13,8 +13,9 @@ import { User } from './model/User';
 })
 export class DataService {
 
-  getRooms(): Observable<Array<Room>> {
-    return this.http.get<Array<Room>>(environment.restUrl + '/api/rooms')
+  getRooms(token: string): Observable<Array<Room>> {
+    const headers = new HttpHeaders().append('Authorization', 'Bearer ' + token);
+    return this.http.get<Array<Room>>(environment.restUrl + '/api/rooms', {headers})
       .pipe(
         map( data => {
           const rooms = new Array<Room>();

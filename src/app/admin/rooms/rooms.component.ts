@@ -3,6 +3,7 @@ import {DataService} from '../../data.service';
 import {Room} from '../../model/Room';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormResetService} from '../../form-reset.service';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-rooms',
@@ -21,11 +22,12 @@ export class RoomsComponent implements OnInit {
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
               private router: Router,
-              private formResetService : FormResetService) { }
+              private formResetService: FormResetService,
+              private authService: AuthService) { }
 
 
     loadData() {
-      this.dataService.getRooms().subscribe(
+      this.dataService.getRooms(this.authService.jwtToken).subscribe(
         (next) => {
           this.rooms = next;
           this.loadingData = false;
@@ -71,11 +73,11 @@ export class RoomsComponent implements OnInit {
   }
 
   setRoom(id: number) {
-    this.router.navigate(['admin','rooms'], {queryParams : {id, action : 'view'} });
+    this.router.navigate(['admin', 'rooms'], {queryParams : {id, action : 'view'} });
   }
 
   addRoom() {
-    this.router.navigate(['admin','rooms'], {queryParams : {action : 'add'} });
+    this.router.navigate(['admin', 'rooms'], {queryParams : {action : 'add'} });
   }
 
 }
