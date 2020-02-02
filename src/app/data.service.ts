@@ -15,7 +15,7 @@ export class DataService {
 
   getRooms(token: string): Observable<Array<Room>> {
     const headers = new HttpHeaders().append('Authorization', 'Bearer ' + token);
-    return this.http.get<Array<Room>>(environment.restUrl + '/api/rooms', {headers})
+    return this.http.get<Array<Room>>(environment.restUrl + '/api/rooms', {headers, withCredentials: true})
       .pipe(
         map( data => {
           const rooms = new Array<Room>();
@@ -123,7 +123,7 @@ export class DataService {
   validateUser(name: string, password: string): Observable<{result: string}> {
     const authData = btoa(`${name}:${password}`);
     const headers = new HttpHeaders().append('Authorization', 'Basic ' + authData);
-    return this.http.get<{result: string}>(environment.restUrl + '/api/basicAuth/validate', {headers});
+    return this.http.get<{result: string}>(environment.restUrl + '/api/basicAuth/validate', {headers, withCredentials: true});
   }
 
   constructor(private http: HttpClient) {
