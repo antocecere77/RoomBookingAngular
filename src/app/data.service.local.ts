@@ -119,6 +119,10 @@ export class DataService {
     return of({result: 'ok'});
   }
 
+  getRole(): Observable<{role: string}> {
+    return of({role: 'ADMIN'});
+  }
+
   constructor() {
 
     console.log(environment.restUrl);
