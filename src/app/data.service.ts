@@ -13,9 +13,8 @@ import { User } from './model/User';
 })
 export class DataService {
 
-  getRooms(token: string): Observable<Array<Room>> {
-    const headers = new HttpHeaders().append('Authorization', 'Bearer ' + token);
-    return this.http.get<Array<Room>>(environment.restUrl + '/api/rooms', {headers, withCredentials: true})
+  getRooms(): Observable<Array<Room>> {
+    return this.http.get<Array<Room>>(environment.restUrl + '/api/rooms', {withCredentials: true})
       .pipe(
         map( data => {
           const rooms = new Array<Room>();
@@ -66,10 +65,8 @@ export class DataService {
     return correctedRoom;
   }
 
-  updateRoom(room: Room, token: string): Observable<Room> {
-    const headers = new HttpHeaders().append('Authorization', 'Bearer ' + token);
-    console.log(headers);
-    return this.http.put<Room>(environment.restUrl + '/api/rooms', this.getCorrectedRoom(room), {headers});
+  updateRoom(room: Room): Observable<Room> {
+    return this.http.put<Room>(environment.restUrl + '/api/rooms', this.getCorrectedRoom(room), {withCredentials: true});
   }
 
   addRoom(room: Room): Observable<Room> {
