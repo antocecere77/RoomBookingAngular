@@ -4,6 +4,7 @@ import {Booking} from '../model/Booking';
 import {DataService} from '../data.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../model/User';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-calendar',
@@ -16,13 +17,18 @@ export class CalendarComponent implements OnInit {
   selectedDate: string;
   dataLoaded = false;
   message = '';
+  isAdminUser = false;
 
   constructor(private dataService: DataService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.loadData();
+    if (this.authService.role === 'ADMIN') {
+      this.isAdminUser = true;
+    }
   }
 
   loadData() {
