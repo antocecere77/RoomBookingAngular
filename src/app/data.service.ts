@@ -152,6 +152,10 @@ export class DataService {
     return this.http.get<{role: string}>(environment.restUrl + '/api/users/currentUserRole', {headers, withCredentials: true});
   }
 
+  logout(): Observable<string> {
+    return this.http.get<string>(environment.restUrl + '/api/users/logout', {withCredentials: true});
+  }
+
   constructor(private http: HttpClient) {
     // console.log(environment.restUrl);
   }

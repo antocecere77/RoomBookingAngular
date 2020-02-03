@@ -123,6 +123,10 @@ export class DataService {
     return of({role: 'ADMIN'});
   }
 
+  logout(): Observable<string> {
+    return of('');
+  }
+
   constructor() {
 
     console.log(environment.restUrl);

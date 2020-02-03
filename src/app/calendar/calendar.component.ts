@@ -29,6 +29,15 @@ export class CalendarComponent implements OnInit {
     if (this.authService.role === 'ADMIN') {
       this.isAdminUser = true;
     }
+    this.authService.roleSetEvent.subscribe(
+      next => {
+        if (next === 'ADMIN') {
+          this.isAdminUser = true;
+        } else {
+          this.isAdminUser = false;
+        }
+      }
+    );
   }
 
   loadData() {

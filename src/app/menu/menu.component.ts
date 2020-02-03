@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -8,21 +9,34 @@ import {Router} from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
+
+  userIsLoggedIn = false;
 
   ngOnInit() {
+    if (this.authService.isAuthenticated) {
+      this.userIsLoggedIn = true;
+    }
+    this.authService.authenticationResultEvent.subscribe(
+      next => this.userIsLoggedIn = next
+    );
   }
 
   navigateToRoomsAdmin() {
-    this.router.navigate(['admin','rooms']);
+    this.router.navigate(['admin', 'rooms']);
   }
 
   navigateToUsersAdmin() {
-    this.router.navigate((['admin','users']));
+    this.router.navigate((['admin', 'users']));
   }
 
   navigateToHome() {
     this.router.navigate(['']);
+  }
+
+  logout() {
+    this.authService.logout();
+    this.navigateToHome();
   }
 
 }

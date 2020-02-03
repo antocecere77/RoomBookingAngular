@@ -10,6 +10,7 @@ export class AuthService {
   authenticationResultEvent = new EventEmitter<boolean>();
 
   role: string;
+  roleSetEvent = new EventEmitter<string>();
 
   constructor(private dataService: DataService) { }
 
@@ -31,6 +32,7 @@ export class AuthService {
     this.dataService.getRole().subscribe(
       next => {
         this.role = next.role;
+        this.roleSetEvent.emit(next.role);
       }
     );
   }
@@ -44,6 +46,12 @@ export class AuthService {
         }
       }
     );
+  }
+
+  logout() {
+    this.dataService.logout().subscribe();
+    this.isAuthenticated = false;
+    this.authenticationResultEvent.emit(false);
   }
 
   // constgetRole(): string {
